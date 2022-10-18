@@ -1,4 +1,4 @@
-package org.server;
+package org.learner.server;
 
 import java.io.*;
 import java.net.ServerSocket;
