@@ -43,4 +43,18 @@ public class ParsedRequest {
     public void setQueryMap(Map<String, String> queryMap) {
         this.queryMap = queryMap;
     }
+
+
+    public void setQueryParam(String key, String value){
+        queryMap.put(key, value);
+    }
+
+    @Override
+    public String toString(){
+        return "method: "  + method + " path: " +path +" body: " + body;
+    }
+
+    public String getQueryParam(String key) {
+        return queryMap.get(key);
+    }
 }

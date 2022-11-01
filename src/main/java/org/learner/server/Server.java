@@ -1,5 +1,11 @@
 package org.learner.server;
 
+import org.learner.handler.BaseHandler;
+import org.learner.handler.HandlerFactory;
+import org.learner.parser.ParsedRequest;
+import org.learner.parser.RequestParser;
+import org.learner.response.CustomHttpResponse;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -34,7 +40,8 @@ public class Server {
 
                 // HTTP Response
                 if(!input.isEmpty()){
-                    writer.println(processRequest(input));
+                    //writer.println(processRequest(input));
+                    System.out.println(processRequest(input));
                 }
                 else{
                     writer.println("HTTP/1.1 200 OK");
@@ -54,6 +61,10 @@ public class Server {
     }
 
     public static String processRequest(String requestString){
-        return null;
+        ParsedRequest parsedRequest = RequestParser.parse(requestString);
+        BaseHandler handler = HandlerFactory.getHandler(parsedRequest);
+        CustomHttpResponse response = handler.handleRequest(parsedRequest);
+        //response.headers.put("Content-type", "application/json");
+        return response.toString();
     }
 }
