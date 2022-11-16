@@ -3,11 +3,13 @@ package org.learner.dao;
 import org.learner.dto.MessageDto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MessageDao implements BaseDao<MessageDto> {
 
-    private List<MessageDto> messageDtoList = new ArrayList<>();
+    private Map<String, MessageDto> data = new HashMap<>();
 
     private static MessageDao messageDAO = new MessageDao();
 
@@ -17,28 +19,22 @@ public class MessageDao implements BaseDao<MessageDto> {
         return messageDAO;
     }
 
-    // TODO fill this out
+
     @Override
     public void put(MessageDto messageDto) {
-        messageDtoList.add(messageDto);
+        data.put(messageDto.getFromId(), messageDto);
     }
 
-    // TODO fill this out
+
     @Override
     public MessageDto get(String uniqueId) {
 
-        // iterate over the loop to find the messageDto with the uniqueId
-        for (MessageDto temp : messageDtoList){
-            if (temp.getUniqueId().compareTo(uniqueId) == 0){
-                return temp;
-            }
-        }
-        return null;
+        return data.get(uniqueId);
     }
 
-    // TODO fill this out
+
     @Override
     public List<MessageDto> getAll() {
-        return messageDtoList;
+        return new ArrayList<>(data.values());
     }
 }

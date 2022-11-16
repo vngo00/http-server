@@ -3,12 +3,14 @@ package org.learner.dao;
 import org.learner.dto.UserDto;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /* singleton design pattern */
 public class UserDao implements BaseDao<UserDto> {
 
-    private List<UserDto> userDtoList = new ArrayList<>();
+    private Map<String, UserDto> data = new HashMap<>();
 
     private static UserDao userDao = new UserDao();
 
@@ -21,28 +23,22 @@ public class UserDao implements BaseDao<UserDto> {
         return userDao;
     }
 
-    // TODO fill this out
+
     @Override
     public void put(UserDto messageDto) {
-        userDtoList.add(messageDto);
+        data.put(messageDto.getUniqueId(), messageDto);
     }
 
-    // TODO fill this out
+
     @Override
     public UserDto get(String uniqueId) {
 
-        for (UserDto temp : userDtoList){
-            if (temp.getUniqueId().compareTo(uniqueId) == 0){
-                return temp;
-            }
-        }
-
-        return null;
+        return data.get(uniqueId);
     }
 
-    // TODO fill this out
+
     @Override
     public List<UserDto> getAll() {
-        return userDtoList;
+        return new ArrayList<>(data.values());
     }
 }
